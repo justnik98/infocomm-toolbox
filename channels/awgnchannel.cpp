@@ -9,10 +9,10 @@ std::vector<float> AWGN_channel::add_noise(std::vector<float> &signal, float SNR
     std::random_device rd{};
     std::mt19937 gen{rd()};
     auto res = signal;
-    auto sigma = sig_pow / sqrt(pow(10,SNR/10));
+    auto sigma = sqrt(sig_pow / pow(10, SNR / 10));
     std::normal_distribution<> dist{0, sigma};
     for (auto &&r: res) {
-        r+= dist(gen);
+        r += dist(gen);
     }
     return res;
 }
@@ -22,7 +22,7 @@ AWGN_channel::add_noise(std::vector<std::complex<float>> &signal, float SNR, flo
     std::random_device rd{};
     std::mt19937 gen{rd()};
     auto res = signal;
-    auto sigma = sig_pow / sqrt(pow(10,SNR/10));
+    auto sigma = sqrt(sig_pow / pow(10, SNR / 10));
     std::normal_distribution<> dist{0, sigma};
     for (auto &&c: res) {
         c.real(c.real() + dist(gen));

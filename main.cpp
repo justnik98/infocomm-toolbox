@@ -8,7 +8,7 @@ int main() {
     vector<float> v (100000000);
     AWGN_channel c;
     auto start = std::chrono::system_clock::now();
-    v = c.add_noise(v,20);
+    v = c.add_noise(v,0, 1);
     auto end = std::chrono::system_clock::now();
 
     std::chrono::duration<double> diff = end - start;
@@ -22,3 +22,4 @@ int main() {
     cout << sum/ v.size() << endl;
     return 0;
 }
+
