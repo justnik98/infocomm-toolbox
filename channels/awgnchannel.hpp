@@ -12,10 +12,9 @@ class AWGN_channel : public Channel {
 public:
     AWGN_channel() = default;
 
-    std::vector<float> add_noise(std::vector<float> &signal, float SNR, float sig_pow = 1) const override;
+    std::vector<float> add_noise(std::vector<float> &signal, float SNR, float sig_pow = 1) const final;
 
-    std::vector<std::complex<float>>
-    add_noise(std::vector<std::complex<float>> &signal, float SNR, float sig_pow = 1) const override;
+    std::complex<float> add_noise(std::complex<float> &signal, float SNR, float sig_pow = 1) const;
 };
 
 
