@@ -12,7 +12,6 @@
 #include <cmath>
 
 
-
 class Modulator {
 private:
     constexpr static auto pi = M_PI;
@@ -32,9 +31,10 @@ public:
     static std::vector<std::vector<double>> fm(int q, double T, double dt, std::vector<double> &f, double E);
 
     static std::vector<std::complex<double>> constellation(int q, double T, double dt, double f, double E,
-                                                    double(*op)(int, double, double, double,
-                                                                int,
-                                                                double));
+                                                           double(*op)(int, double, double, double,
+                                                                       int,
+                                                                       double));
+    static double fer_theor(double snr, int q, const std::string& mod);
 };
 
 

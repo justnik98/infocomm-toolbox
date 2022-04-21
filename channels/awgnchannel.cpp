@@ -23,8 +23,10 @@ std::complex<double> AWGN_channel::add_noise(std::complex<double> &signal, doubl
     auto res = signal;
     auto sigma = sqrt(sig_pow / pow(10, SNR / 10));
     std::normal_distribution<> dist{0, sigma};
-    res.real(res.real() + dist(gen));
-    res.imag(res.imag() + dist(gen));
+    auto x_noise = dist(gen);
+    auto y_noise = dist(gen);
+    res.real(res.real() + x_noise/sqrt(2));
+    res.imag(res.imag() + y_noise/sqrt(2));
     return res;
 }
 

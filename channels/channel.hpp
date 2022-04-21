@@ -12,11 +12,11 @@ class Channel {
 public:
     Channel() = default;
 
-    [[nodiscard]] virtual std::vector<float>
-    add_noise(std::vector<float> &signal, float SNR, float sig_pow = 1) const = 0;
+    [[nodiscard]] virtual std::vector<double>
+    add_noise(std::vector<double> &signal, double SNR, double sig_pow = 1) const = 0;
 
-    [[nodiscard]] virtual std::complex<float>
-    add_noise(std::complex<float> &signal, float SNR, float sig_pow = 1) const = 0;
+    [[nodiscard]] virtual std::complex<double>
+    add_noise(std::complex<double> &signal, double SNR, double sig_pow = 1) const = 0;
 };
 
 

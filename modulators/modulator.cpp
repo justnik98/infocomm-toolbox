@@ -2,6 +2,7 @@
 // Created by justnik on 21.04.22.
 //
 
+#include <iostream>
 #include "modulator.hpp"
 
 double Modulator::qam_signal(int i, double t, double f, double T, int q, double A) {
@@ -20,7 +21,7 @@ std::vector<std::vector<double>> Modulator::qam(int q, double T, double dt, doub
     }
     for (int i = 0; i < q; i++) {
         int j = 0;
-        for (double t = 0, j = 0; t < T; t += dt, j++) {
+        for (double t = 0; t < T; t += dt, j++) {
             arr[i][j] = qam_signal(i, t, f, T, q, A);
         }
     }
@@ -34,7 +35,7 @@ std::vector<std::vector<double>> Modulator::pm(int q, double T, double dt, doubl
     }
     for (int i = 0; i < q; i++) {
         int j = 0;
-        for (double t = 0, j = 0; t < T; t += dt, j++) {
+        for (double t = 0; t < T; t += dt, j++) {
             arr[i][j] = pm_signal(i, t, f, T, q, E);
         }
     }
@@ -80,5 +81,21 @@ std::vector<std::complex<double>> Modulator::constellation(int q, double T, doub
         }
         res[i] = std::complex(x * dt, y * dt);
     }
+    double e_mean = 0;
+    for (auto &si: res) {
+        e_mean += (si.real() * si.real() + si.imag() * si.imag());
+    }
+    e_mean /= q;
+    for (auto &si: res) {
+        si.real(si.real() / sqrt(e_mean / E));
+        si.imag(si.imag() / sqrt(e_mean / E));
+    }
     return res;
+}
+
+double Modulator::fer_theor(double snr, int q, const std::string &mod) {
+    if (mod == "qam") {
+        return pow(e, (-3 * snr / (2 * (q - 1))));
+    }
+    return 0;
 }
