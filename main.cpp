@@ -6,7 +6,7 @@
 using namespace  std;
 int main() {
     //Time Test
-//    vector<float> v (100000000);
+//    vector<double> v (100000000);
 //    AWGN_channel c;
 //    auto start = std::chrono::system_clock::now();
 //    v = c.add_noise(v,0, 1);

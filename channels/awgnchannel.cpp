@@ -5,7 +5,7 @@
 #include "awgnchannel.hpp"
 
 
-std::vector<float> AWGN_channel::add_noise(std::vector<float> &signal, float SNR, float sig_pow) const {
+std::vector<double> AWGN_channel::add_noise(std::vector<double> &signal, double SNR, double sig_pow) const {
     std::random_device rd{};
     std::mt19937 gen{rd()};
     auto res = signal;
@@ -17,7 +17,7 @@ std::vector<float> AWGN_channel::add_noise(std::vector<float> &signal, float SNR
     return res;
 }
 
-std::complex<float> AWGN_channel::add_noise(std::complex<float> &signal, float SNR, float sig_pow) const {
+std::complex<double> AWGN_channel::add_noise(std::complex<double> &signal, double SNR, double sig_pow) const {
     std::random_device rd{};
     std::mt19937 gen{rd()};
     auto res = signal;
