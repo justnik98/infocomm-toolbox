@@ -16,6 +16,15 @@ class Modulator {
 private:
     constexpr static auto pi = M_PI;
     constexpr static auto e = M_E;
+
+    static double normalCDF(double value) {
+        return 0.5 * erfc(-value * M_SQRT1_2);
+    }
+
+    static double Q(double x) {
+        return 1.0 - normalCDF(x);
+    }
+
 public:
 
     static double pm_signal(int i, double t, double f, double T, int q, double E);
@@ -34,7 +43,8 @@ public:
                                                            double(*op)(int, double, double, double,
                                                                        int,
                                                                        double));
-    static double fer_theor(double snr, int q, const std::string& mod);
+
+    static double fer_theor(double snr, int q, const std::string &mod);
 };
 
 

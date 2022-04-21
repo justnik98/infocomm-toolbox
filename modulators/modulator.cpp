@@ -96,6 +96,8 @@ std::vector<std::complex<double>> Modulator::constellation(int q, double T, doub
 double Modulator::fer_theor(double snr, int q, const std::string &mod) {
     if (mod == "qam") {
         return pow(e, (-3 * snr / (2 * (q - 1))));
+    } else if (mod == "pm") {
+        return 2 * Q(sqrt(2 * snr) * sin(pi / q));
     }
     return 0;
 }
