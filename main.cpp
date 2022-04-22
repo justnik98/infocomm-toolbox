@@ -97,7 +97,7 @@ int main() {
     //spectrum
 
     ofstream out4("Spectrum");
-    auto sp = Modulator::spectrum(q, T, 1, f, E, "pm");
+    auto sp = Modulator::spectrum(q, T, 1, f, E, "qam");
     for (int j = 0; j < sp[0].size(); ++j) {
         out4 << j << ' ' << sp[0][j] << endl;
     }
