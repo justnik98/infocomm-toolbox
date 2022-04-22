@@ -101,3 +101,42 @@ double Modulator::fer_theor(double snr, int q, const std::string &mod) {
     }
     return 0;
 }
+
+std::vector<std::vector<double>>
+Modulator::spectrum(int q, double T, double df, double f0, double E, const std::string &mod) {
+    std::vector<std::vector<double>> s(q);
+
+    if (mod == "qam") {
+        for (int i = 0; i < q; ++i) {
+            std::complex<double> p;
+            for (int f = 0; f < 10 * f0; ++f) {
+                int i1 = i / sqrt(q);
+                int i2 = i % (int) sqrt(q);
+                double si1 = E * (1 - 2 * i1 / (sqrt(q) - 1));
+                double si2 = E * (1 - 2 * i2 / (sqrt(q) - 1));
+
+            }
+        }
+        return {{0}};
+    } else if (mod == "pm") {
+        for (int i = 0; i < q; ++i) {
+            std::complex<double> p;
+            for (int f = 0; f < 10 * f0; ++f) {
+                double theta = 2.0 * pi * i / q;
+                std::complex<double> p3 = pow(e, std::complex<double>(0, pi * f * T));
+                std::complex<double> p1 =
+                        sqrt(E * T / 2.0) * cos(theta) * (sinc((f - f0) * T) + sinc((f + f0) * T)) * p3;
+                std::complex<double> p2 =
+                        (std::complex<double>(1, 0) / std::complex<double>(0, 1)) * sqrt(E * T / 2.0) * sin(theta) *
+                        (sinc((f - f0) * T) - sinc((f + f0) * T)) * p3;
+                p = p1 + p2;
+                s[i].push_back(abs(p));
+            }
+        }
+
+        return s;
+    }
+
+
+    return std::vector<std::vector<double>>();
+}

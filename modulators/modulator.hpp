@@ -25,15 +25,21 @@ private:
         return 1.0 - normalCDF(x);
     }
 
+    static double sinc(double x) {
+        if (x != 0) {
+            return sin(x) / (x);
+        } else return 1;
+    }
+
 public:
 
     static double pm_signal(int i, double t, double f, double T, int q, double E);
 
     static double fm_signal(int i, double t, double f, double T, int q, double E);
 
-    static double qam_signal(int i, double t, double f, double T, int q, double A);
+    static double qam_signal(int i, double t, double f, double T, int q, double E);
 
-    static std::vector<std::vector<double>> qam(int q, double T, double dt, double f, double A);
+    static std::vector<std::vector<double>> qam(int q, double T, double dt, double f, double E);
 
     static std::vector<std::vector<double>> pm(int q, double T, double dt, double f, double E);
 
@@ -45,6 +51,9 @@ public:
                                                                        double));
 
     static double fer_theor(double snr, int q, const std::string &mod);
+
+    static std::vector<std::vector<double>>
+    spectrum(int q, double T, double df, double f, double E, const std::string &mod);
 };
 
 
