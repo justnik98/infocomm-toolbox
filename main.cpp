@@ -89,9 +89,17 @@ int main() {
         snr = i++;
     }
     ofstream out3("Pe");
-    auto res = modeling(constell, snr_arr, 100000);
+    auto res = modeling(constell, snr_arr, 10000);
     for (auto j = 0; j < snr_arr.size(); ++j) {
         out3 << snr_arr[j] << ' ' << res[j] << ' ' << Modulator::fer_theor(pow(10, snr_arr[j] / 10), q, "pm") << endl;
+    }
+
+    //spectrum
+
+    ofstream out4("Spectrum");
+    auto sp = Modulator::spectrum(q, T, 1, f, E, "pm");
+    for (int j = 0; j < sp[0].size(); ++j) {
+        out4 << j << ' ' << sp[0][j] << endl;
     }
     return 0;
 }
