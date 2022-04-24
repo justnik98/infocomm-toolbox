@@ -1,5 +1,5 @@
 # infocomm-toolbox
-    This library provides standard-compliant functions and reference examples for the modeling, simulation, and verification of communications systems. 
+This library provides standard-compliant functions and reference examples for the modeling, simulation, and verification of communications systems. 
 #### This library allows you to:
 * Generate QAM/PM signals, as well as set and build signal constellations.
 * Simulate the presence of white Gaussian noise in the channel
