@@ -54,6 +54,8 @@ public:
 
     static std::vector<std::vector<double>>
     spectrum(int q, double T, double df, double f, double E, const std::string &mod);
+
+    static std::vector<int> grey_mapping (int q, const std::string &mod);
 };
 
 

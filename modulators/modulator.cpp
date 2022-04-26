@@ -144,3 +144,25 @@ Modulator::spectrum(int q, double T, double df, double f0, double E, const std::
 
     return {};
 }
+
+std::vector<int> Modulator::grey_mapping(int q, const std::string &mod) {
+    std::vector<int> res;
+    if (mod == "pm") {
+        for (size_t i = 0; i < q; ++i) {
+            res.push_back(i ^(i >> 1)); // xor индекса и сдвинутого на один вправо индекса
+        }
+    }
+    else if (mod == "qam") {
+        for (size_t i = 0; i < q; ++i) {
+            res.push_back(i ^(i >> 1));
+        }
+        int i = 0;
+        for (auto it = res.begin(); it != res.end(); it += (int) sqrt(q), i++) {
+            if (i % 2 != 0) {
+                std::reverse(it, it + (int) sqrt(q));
+            }
+        }
+    }
+    return res;
+}
+

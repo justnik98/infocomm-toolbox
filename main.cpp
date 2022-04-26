@@ -1,6 +1,7 @@
 #include <complex>
 #include <iostream>
 #include <fstream>
+#include "tcm/tcm.hpp"
 #include "channels/awgnchannel.hpp"
 #include "modulators/modulator.hpp"
 
@@ -57,49 +58,59 @@ int main() {
 //    }
 //    cout << sum/ v.size() << endl;
     // params
-    int q = 16;
-    double T = 1.0 / 600.0;
-    double dt = T / 1000.0;
-    int f = 2400;
-    // vector<double> f = {20.0/T, 19.0/T, 18.0/T, 17.0/T};
-    double E = 1;
-    //signals
-    ofstream out("in.txt");
-    auto arr = Modulator::pm(q, T, dt, f, E);
-
-    for (auto j = 0; j < arr[0].size(); ++j) {
-        out << dt * j << ' ';
-        for (auto &i: arr) {
-            out << i[j] << ' ';
-        }
-        out << endl;
-    }
-    out.close();
-    //constellation
-    ofstream out2("constellation");
-    auto foo = Modulator::pm_signal; //хранит указатель на функцию qam_signal
-    auto constell = Modulator::constellation(q, T, dt, f, E, foo);
-    for (int i = 0; i < q; ++i) {
-        out2 << constell[i].real() << ' ' << constell[i].imag() << endl;
-    }
-    //awgn channel
-    vector<double> snr_arr(25);
-    int i = 0;
-    for (auto &snr: snr_arr) {
-        snr = i++;
-    }
-    ofstream out3("Pe");
-    auto res = modeling(constell, snr_arr, 10000);
-    for (auto j = 0; j < snr_arr.size(); ++j) {
-        out3 << snr_arr[j] << ' ' << res[j] << ' ' << Modulator::fer_theor(pow(10, snr_arr[j] / 10), q, "pm") << endl;
-    }
-
-    //spectrum
-
-    ofstream out4("Spectrum");
-    auto sp = Modulator::spectrum(q, T, 1, f, E, "qam");
-    for (int j = 0; j < sp[0].size(); ++j) {
-        out4 << j << ' ' << sp[0][j] << endl;
+//    int q = 16;
+//    double T = 1.0 / 600.0;
+//    double dt = T / 1000.0;
+//    int f = 2400;
+//    // vector<double> f = {20.0/T, 19.0/T, 18.0/T, 17.0/T};
+//    double E = 1;
+//    //signals
+//    ofstream out("in.txt");
+//    auto arr = Modulator::pm(q, T, dt, f, E);
+//
+//    for (auto j = 0; j < arr[0].size(); ++j) {
+//        out << dt * j << ' ';
+//        for (auto &i: arr) {
+//            out << i[j] << ' ';
+//        }
+//        out << endl;
+//    }
+//    out.close();
+//    //constellation
+//    ofstream out2("constellation");
+//    auto foo = Modulator::pm_signal; //хранит указатель на функцию qam_signal
+//    auto constell = Modulator::constellation(q, T, dt, f, E, foo);
+//    for (int i = 0; i < q; ++i) {
+//        out2 << constell[i].real() << ' ' << constell[i].imag() << endl;
+//    }
+//    //awgn channel
+//    vector<double> snr_arr(25);
+//    int i = 0;
+//    for (auto &snr: snr_arr) {
+//        snr = i++;
+//    }
+//    ofstream out3("Pe");
+//    auto res = modeling(constell, snr_arr, 10000);
+//    for (auto j = 0; j < snr_arr.size(); ++j) {
+//        out3 << snr_arr[j] << ' ' << res[j] << ' ' << Modulator::fer_theor(pow(10, snr_arr[j] / 10), q, "pm") << endl;
+//    }
+//
+//    //spectrum
+//
+//    ofstream out4("Spectrum");
+//    auto sp = Modulator::spectrum(q, T, 1, f, E, "pm");
+//    for (int j = 0; j < sp[0].size(); ++j) {
+//        out4 << j << ' ' << sp[0][j] << endl;
+//    }
+//
+//    auto res2 = Modulator::grey_mapping(q,  "qam");
+//    for (int j = 0; j < res2.size(); ++j) {
+//        cout << res2[j] << ' ';
+//    }
+    TCM tcm({{1, 0}, {1,0}});
+    auto msg = tcm.encode({1,0,1,0,1,0,1,0});
+    for(const auto &b: msg){
+        cout << b?1:0;
     }
     return 0;
 }
