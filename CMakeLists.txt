@@ -2,5 +2,8 @@ cmake_minimum_required(VERSION 3.22)
 project(infocomm_toolbox)
 
 set(CMAKE_CXX_STANDARD 20)
-
+include_directories(tcm)
+add_subdirectory(tcm)
 add_executable(infocomm_toolbox main.cpp channels/channel.hpp channels/awgnchannel.cpp channels/awgnchannel.hpp modulators/modulator.cpp tcm/tcm.cpp tcm/tcm.hpp)
+target_link_libraries(infocomm_toolbox tcm_lib)
+add_subdirectory(Google_tests)
