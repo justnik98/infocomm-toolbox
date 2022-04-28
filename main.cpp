@@ -107,9 +107,19 @@ int main() {
 //    for (int j = 0; j < res2.size(); ++j) {
 //        cout << res2[j] << ' ';
 //    }
-    TCM tcm({{1, 0}, {1,0}});
-    auto msg = tcm.encode({1,0,1,0,1,0,1,0});
+    TCM tcm({{3,5}, {1,2}, {1,7}});
+    vector<bool> msg ={1,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,1,0,0,0,0,0};
+    auto enc_msg = tcm.encode(msg);
+    for(const auto &b: enc_msg){
+        cout << b?1:0;
+    }
+    cout << endl;
     for(const auto &b: msg){
+        cout << b?1:0;
+    }
+    cout << endl;
+    auto dec_msg = tcm.vitdec(enc_msg);
+    for(const auto &b: dec_msg){
         cout << b?1:0;
     }
     return 0;
