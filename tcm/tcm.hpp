@@ -21,6 +21,8 @@ public:
 
     std::vector<bool> encode (const std::vector<bool> &msg);
 
+    std::vector<bool> vitdec (const std::vector<bool> &msg);
+
 };
 
 
