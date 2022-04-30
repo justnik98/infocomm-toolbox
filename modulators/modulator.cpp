@@ -187,7 +187,7 @@ std::vector<bool> Modulator::qam_demod(const std::vector<std::complex<double>> &
             bool bi = mapping[ind] & (1 << i);
             res.push_back(bi);
         }
-        j ++;
+        j++;
     }
     return res;
 }
@@ -206,6 +206,37 @@ Modulator::qam_mod(const std::vector<bool> &msg, const std::vector<std::complex<
         }
         auto pos = std::distance(mapping.begin(), std::find(mapping.begin(), mapping.end(), bits));
         res.push_back(constellation[pos]);
+    }
+    return res;
+}
+
+std::vector<double> Modulator::qam_soft_demod(const std::vector<std::complex<double>> &signal,
+                                              const std::vector<std::complex<double>> &constellation,
+                                              const std::vector<int> &mapping, double SNR, double sig_pow) {
+    std::vector<double> res;
+    auto sigma = sqrt(sig_pow / pow(10, SNR / 10));
+    auto j = 0;
+    auto m = (int) log2(constellation.size());
+    std::vector<double> p0(m);
+    std::vector<double> p1(m);
+    std::vector<double> llr(m);
+    while (j < signal.size()) {
+        for (auto k = 0; k < constellation.size(); ++k) {
+            double d = pow(constellation[k].real() - signal[j].real(), 2) +
+                       pow(constellation[k].imag() - signal[j].imag(), 2);
+            for (auto i = m - 1; i >= 0; --i) {
+                if (bool bi = mapping[k] & (1 << i)) {
+                    p1[m - i - 1] += exp(-d / (2 * sigma * sigma));
+                } else {
+                    p0[m - i - 1] += exp(-d / (2 * sigma * sigma));
+                }
+            }
+        }
+        for (auto i = 0; i < m; ++i) {
+            llr[i] = log(p0[i] / p1[i]);
+        }
+        j++;
+        res.insert(res.end(), llr.begin(), llr.end());
     }
     return res;
 }

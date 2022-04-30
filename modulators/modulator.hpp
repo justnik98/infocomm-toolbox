@@ -62,7 +62,9 @@ public:
             const std::vector<int> &mapping);
 
 
-    //static std::vector<double> qam_soft_demod(std::vector<std::complex<double>> signal, std::vector<int> mapping);
+    static std::vector<double> qam_soft_demod(const std::vector<std::complex<double>> &signal,
+                                              const std::vector<std::complex<double>> &constellation,
+                                              const std::vector<int> &mapping, double SNR, double sig_pow = 1);
 
     static std::vector<bool>
     qam_demod(const std::vector<std::complex<double>> &signal, const std::vector<std::complex<double>> &constellation,
