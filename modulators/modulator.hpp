@@ -55,7 +55,20 @@ public:
     static std::vector<std::vector<double>>
     spectrum(int q, double T, double df, double f, double E, const std::string &mod);
 
-    static std::vector<int> grey_mapping (int q, const std::string &mod);
+    static std::vector<int> grey_mapping(int q, const std::string &mod);
+
+    static std::vector<std::complex<double>>
+    qam_mod(const std::vector<bool> &msg, const std::vector<std::complex<double>> &constellation,
+            const std::vector<int> &mapping);
+
+
+    static std::vector<double> qam_soft_demod(const std::vector<std::complex<double>> &signal,
+                                              const std::vector<std::complex<double>> &constellation,
+                                              const std::vector<int> &mapping, double SNR, double sig_pow = 1);
+
+    static std::vector<bool>
+    qam_demod(const std::vector<std::complex<double>> &signal, const std::vector<std::complex<double>> &constellation,
+              const std::vector<int> &mapping);
 };
 
 
