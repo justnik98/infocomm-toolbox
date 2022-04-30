@@ -32,3 +32,12 @@ TEST(TCM_Decoder, fix_one_bit_error){
     res[50] = !res[50];
     EXPECT_EQ(tcm.vitdec(res),msg);
 }
+
+TEST(TCM_Decoder, large_input){
+    TCM tcm({{10, 15}, {37, 76}});
+    std::vector<bool> msg (10240);
+    for(auto &&mi:msg){
+        mi = rand() % 2;
+    }
+    EXPECT_EQ(tcm.vitdec(tcm.encode(msg)),msg);
+}
