@@ -23,6 +23,8 @@ public:
 
     std::vector<bool> vitdec (const std::vector<bool> &msg);
 
+    std::vector<bool> vitdec (const std::vector<double> &msg);
+
 };
 
 
