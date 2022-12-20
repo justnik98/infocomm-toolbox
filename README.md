@@ -7,5 +7,4 @@ This library provides standard-compliant functions and reference examples for th
 
 
 #### Authors:
-[Anastasia Kolesnikova](https://github.com/ankolesn)  
 [Nikita Yankovskii](https://github.com/justnik98)
